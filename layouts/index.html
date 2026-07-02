@@ -13,9 +13,9 @@
       --text: #e7e9ee;
       --muted: #9aa2b1;
       --border: #232733;
-      --accent-1: #7c5cff;
-      --accent-2: #22d3ee;
-      --accent-3: #f472b6;
+      --accent-1: #1e40af;
+      --accent-2: #06b6d4;
+      --accent-3: #cffafe;
     }
 
     * { box-sizing: border-box; }
@@ -37,9 +37,9 @@
       inset: 0;
       z-index: -1;
       background:
-        radial-gradient(circle at 15% 20%, rgba(124, 92, 255, 0.25), transparent 45%),
-        radial-gradient(circle at 85% 15%, rgba(34, 211, 238, 0.18), transparent 45%),
-        radial-gradient(circle at 50% 100%, rgba(244, 114, 182, 0.12), transparent 50%),
+        radial-gradient(circle at 15% 20%, rgba(30, 64, 175, 0.35), transparent 45%),
+        radial-gradient(circle at 85% 15%, rgba(6, 182, 212, 0.22), transparent 45%),
+        radial-gradient(circle at 50% 100%, rgba(207, 250, 254, 0.06), transparent 50%),
         var(--bg);
     }
 
@@ -50,15 +50,37 @@
       text-align: center;
     }
 
-    .hero h1 {
-      font-size: clamp(3.5rem, 12vw, 6.5rem);
+    .brand {
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: baseline;
+      column-gap: clamp(0.4rem, 2vw, 1rem);
+      row-gap: 0.5rem;
+    }
+
+    .brand .word {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.12em;
+    }
+
+    .brand .initial {
+      font-size: clamp(3rem, 10vw, 5.5rem);
       font-weight: 800;
       letter-spacing: -0.03em;
-      margin: 0;
       background: linear-gradient(90deg, var(--accent-1), var(--accent-2) 55%, var(--accent-3));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
+    }
+
+    .brand .rest {
+      font-size: clamp(1rem, 2.4vw, 1.5rem);
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      color: var(--muted);
     }
 
     .hero p {
@@ -152,7 +174,12 @@
   <div class="backdrop"></div>
 
   <header class="hero">
-    <h1>{{ .Title }}</h1>
+    <h1 class="brand">
+      <span class="word"><span class="initial">L</span><span class="rest">ightsource</span></span>
+      <span class="word"><span class="initial">U</span><span class="rest">nified</span></span>
+      <span class="word"><span class="initial">M</span><span class="rest">odeling</span></span>
+      <span class="word"><span class="initial">E</span><span class="rest">nvironment</span></span>
+    </h1>
     {{ with .Description }}<p>{{ . }}</p>{{ end }}
   </header>
 
