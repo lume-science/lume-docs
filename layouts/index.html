@@ -14,7 +14,7 @@
       --muted: #9aa2b1;
       --border: #232733;
       --accent-1: #1e40af;
-      --accent-2: #06b6d4;
+      --accent-2: #6b84b3;
       --accent-3: #cffafe;
     }
 
@@ -48,9 +48,9 @@
     .sparkle {
       position: absolute;
       border-radius: 50%;
-      background: var(--accent-2);
+      background: var(--accent-1);
       opacity: 0.3;
-      box-shadow: 0 0 4px 1px rgba(6, 182, 212, 0.35);
+      box-shadow: 0 0 4px 1px rgba(30, 64, 175, 0.35);
       pointer-events: none;
       will-change: opacity, box-shadow;
       transition: opacity 0.15s ease-out, box-shadow 0.15s ease-out;
@@ -103,10 +103,10 @@
     .brand {
       margin: 0;
       display: flex;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       justify-content: center;
       align-items: baseline;
-      column-gap: clamp(0.4rem, 2vw, 1rem);
+      column-gap: clamp(0.2rem, 2vw, 1rem);
       row-gap: 0.5rem;
     }
 
@@ -114,20 +114,21 @@
       display: inline-flex;
       align-items: baseline;
       gap: 0.12em;
+      white-space: nowrap;
     }
 
     .brand .initial {
-      font-size: clamp(3rem, 10vw, 5.5rem);
+      font-size: clamp(1rem, 7.5vw, 4.7rem);
       font-weight: 800;
       letter-spacing: -0.03em;
-      color: var(--text);
+      color: var(--accent-2);
     }
 
     .brand .rest {
-      font-size: clamp(1rem, 2.4vw, 1.5rem);
+      font-size: clamp(0.5rem, 3.2vw, 1.8rem);
       font-weight: 500;
       letter-spacing: -0.01em;
-      color: var(--text);
+      color: var(--accent-2);
     }
 
     .hero p {
@@ -330,7 +331,7 @@
       if (!sparkles.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
       var ticking = false;
-      var radius = 140;
+      var radius = 280;
 
       function apply(x, y) {
         sparkles.forEach(function (el) {
@@ -340,7 +341,7 @@
           var dist = Math.hypot(x - cx, y - cy);
           var t = Math.max(0, 1 - dist / radius);
           el.style.opacity = (0.3 + t * 0.7).toFixed(2);
-          el.style.boxShadow = '0 0 ' + (4 + t * 16) + 'px ' + (1 + t * 3) + 'px rgba(6, 182, 212, ' + (0.35 + t * 0.5) + ')';
+          el.style.boxShadow = '0 0 ' + (4 + t * 16) + 'px ' + (1 + t * 3) + 'px rgba(30, 64, 175, ' + (0.35 + t * 0.5) + ')';
         });
         ticking = false;
       }
