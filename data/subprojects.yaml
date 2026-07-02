@@ -6,15 +6,35 @@
 #   repo: https://github.com/org/repo
 #   docs: /docs/package-name/   # optional; omit or leave blank if none yet
 
-- name: lume-core
+- name: LUME Base
   description: Placeholder description of the core LUME package. Replace with the real summary.
-  repo: https://github.com/example/lume-core
-  docs: ""
-- name: lume-cli
-  description: Placeholder description of the LUME command-line tool. Replace with the real summary.
-  repo: https://github.com/example/lume-cli
-  docs: ""
-- name: lume-viz
+  repo: https://github.com/lume-science/lume-base
+  docs: https://lume-science.github.io/lume-base/
+- name: LUME Impact
   description: Placeholder description of the LUME visualization package. Replace with the real summary.
-  repo: https://github.com/example/lume-viz
+  repo: https://github.com/ChristopherMayes/lume-impact
+  docs: https://christophermayes.github.io/lume-impact/
+- name: LUME Genesis
+  description: Placeholder description of the LUME visualization package. Replace with the real summary.
+  repo: https://github.com/slaclab/lume-genesis
+  docs: https://slaclab.github.io/lume-genesis/
+- name: LUME ASTRA
+  description: Placeholder description of the LUME visualization package. Replace with the real summary.
+  repo: https://github.com/ChristopherMayes/lume-astra
+  docs: ""
+- name: LUME PVA
+  description: Placeholder description of the LUME command-line tool. Replace with the real summary.
+  repo: https://github.com/lume-science/lume-pva
+  docs: ""
+- name: LUME BMAD
+  description: Placeholder description of the LUME visualization package. Replace with the real summary.
+  repo: https://github.com/lume-science/lume-bmad
+  docs: ""
+- name: LUME Cheetah
+  description: Placeholder description of the LUME visualization package. Replace with the real summary.
+  repo: https://github.com/lume-science/lume-cheetah
+  docs: ""
+- name: LUME Torch
+  description: Placeholder description of the LUME visualization package. Replace with the real summary.
+  repo: https://github.com/lume-science/lume-torch
   docs: ""
