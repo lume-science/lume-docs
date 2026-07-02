@@ -23,10 +23,14 @@
     html, body {
       margin: 0;
       padding: 0;
+      height: 100%;
     }
 
     body {
       position: relative;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
       background: var(--bg);
       color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -56,15 +60,43 @@
       .sparkle { transition: none; }
     }
 
-    .hero-band {
+    .navbar {
       background: var(--bg-alt);
       border-bottom: 1px solid var(--border);
+    }
+
+    .navbar-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .navbar-brand {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .navbar-link {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .navbar-link:hover {
+      color: var(--accent-2);
     }
 
     .hero {
       max-width: 860px;
       margin: 0 auto;
-      padding: 8rem 1.5rem 3rem;
+      padding: 6rem 1.5rem 3rem;
       text-align: center;
     }
 
@@ -106,19 +138,11 @@
     }
 
     main {
+      flex: 1 0 auto;
       max-width: 1100px;
+      width: 100%;
       margin: 0 auto;
       padding: 1rem 1.5rem 6rem;
-    }
-
-    .section-title {
-      font-size: 0.85rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--muted);
-      margin: 0 0 1.5rem;
-      text-align: center;
     }
 
     .cards {
@@ -178,10 +202,62 @@
     }
 
     footer {
-      text-align: center;
-      padding: 2rem 1.5rem 3rem;
+      flex-shrink: 0;
+      border-top: 1px solid var(--border);
+      background: var(--bg-alt);
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    .footer-heading {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
       color: var(--muted);
+      margin: 0 0 0.75rem;
+    }
+
+    .footer-news {
+      list-style: none;
+      margin: 0 0 1.5rem;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
       font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .footer-news .news-date {
+      color: var(--text);
+      font-weight: 600;
+      margin-right: 0.5rem;
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .footer-bottom a {
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .footer-bottom a:hover {
+      color: var(--accent-2);
     }
   </style>
 </head>
@@ -195,22 +271,26 @@
     {{ end }}
   </div>
 
-  <header class="hero-band">
-    <div class="hero">
-      <h1 class="brand">
-        <span class="word"><span class="initial">L</span><span class="rest">ightsource</span></span>
-        <span class="word"><span class="initial">U</span><span class="rest">nified</span></span>
-        <span class="word"><span class="initial">M</span><span class="rest">odeling</span></span>
-        <span class="word"><span class="initial">E</span><span class="rest">nvironment</span></span>
-      </h1>
-      {{ with .Description }}<p>{{ . }}</p>{{ end }}
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a class="navbar-brand" href="{{ "/" | relURL }}">LUME</a>
+      <a class="navbar-link" href="{{ .Site.Params.githubOrg }}">GitHub</a>
     </div>
+  </nav>
+
+  <header class="hero">
+    <h1 class="brand">
+      <span class="word"><span class="initial">L</span><span class="rest">ightsource</span></span>
+      <span class="word"><span class="initial">U</span><span class="rest">nified</span></span>
+      <span class="word"><span class="initial">M</span><span class="rest">odeling</span></span>
+      <span class="word"><span class="initial">E</span><span class="rest">nvironment</span></span>
+    </h1>
+    {{ with .Description }}<p>{{ . }}</p>{{ end }}
   </header>
 
   <main>
     {{ $subprojects := hugo.Data.subprojects }}
     {{ if $subprojects }}
-      <h2 class="section-title">Ecosystem</h2>
       <div class="cards">
         {{ range $subprojects }}
           <div class="card">
@@ -226,7 +306,23 @@
     {{ end }}
   </main>
 
-  <footer>&copy; {{ now.Year }} LUME</footer>
+  <footer>
+    <div class="footer-inner">
+      {{ $news := hugo.Data.news }}
+      {{ if $news }}
+        <h2 class="footer-heading">News</h2>
+        <ul class="footer-news">
+          {{ range $news }}
+            <li><span class="news-date">{{ .date }}</span>{{ .text }}</li>
+          {{ end }}
+        </ul>
+      {{ end }}
+      <div class="footer-bottom">
+        <span>&copy; {{ now.Year }} LUME</span>
+        <a href="{{ .Site.Params.githubOrg }}">GitHub</a>
+      </div>
+    </div>
+  </footer>
 
   <script>
     (function () {

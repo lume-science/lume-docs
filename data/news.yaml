@@ -1,0 +1,9 @@
+# News items shown in the footer. Add or edit entries here.
+#
+# - date: 2026-06-01
+#   text: Short news blurb.
+
+- date: "2026-06-01"
+  text: "Placeholder news item -- replace with a real update."
+- date: "2026-05-15"
+  text: "Placeholder news item -- replace with a real update."
