@@ -1,0 +1,20 @@
+# Sub-projects in the LUME ecosystem, rendered as cards on the landing page.
+# Add or edit entries here -- no template changes needed.
+#
+# - name: Package Name
+#   description: One or two sentence summary of what this package does.
+#   repo: https://github.com/org/repo
+#   docs: /docs/package-name/   # optional; omit or leave blank if none yet
+
+- name: lume-core
+  description: Placeholder description of the core LUME package. Replace with the real summary.
+  repo: https://github.com/example/lume-core
+  docs: ""
+- name: lume-cli
+  description: Placeholder description of the LUME command-line tool. Replace with the real summary.
+  repo: https://github.com/example/lume-cli
+  docs: ""
+- name: lume-viz
+  description: Placeholder description of the LUME visualization package. Replace with the real summary.
+  repo: https://github.com/example/lume-viz
+  docs: ""
