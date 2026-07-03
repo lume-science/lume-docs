@@ -26,7 +26,6 @@
     html, body {
       margin: 0;
       padding: 0;
-      height: 100%;
     }
 
     body {
@@ -51,9 +50,9 @@
     .sparkle {
       position: absolute;
       border-radius: 50%;
-      background: var(--accent-1);
+      background: #33ff33;
       opacity: 0.3;
-      box-shadow: 0 0 4px 1px rgba(30, 64, 175, 0.35);
+      box-shadow: 0 0 4px 1px rgba(51, 255, 51, 0.35);
       pointer-events: none;
       will-change: opacity, box-shadow;
       transition: opacity 0.15s ease-out, box-shadow 0.15s ease-out;
@@ -71,7 +70,7 @@
     .navbar-inner {
       max-width: var(--content-width);
       margin: 0 auto;
-      padding: 1.25rem 1.5rem;
+      padding: 1rem 1.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -98,13 +97,16 @@
     }
 
     .hero {
-      max-width: 860px;
+      max-width: var(--content-width);
       width: 100%;
       margin: 0 auto;
       padding: 3rem 1.5rem 0;
     }
 
     .hero-box {
+      max-width: 800px;
+      width: 100%;
+      margin: 0 auto;
       background: var(--bg-alt);
       border: 1px solid var(--border);
       border-radius: 14px;
@@ -144,10 +146,9 @@
     }
 
     .hero p {
-      margin: 0.75rem auto 0;
-      max-width: 620px;
+      margin: 0.75rem 0 0;
       font-size: 0.95rem;
-      text-align: justify;
+      text-align: center;
       color: var(--muted);
     }
 
@@ -311,9 +312,9 @@
 </head>
 <body>
   <div class="backdrop">
-    {{ range $i := seq 0 59 }}
-      {{ $top := mod (mul $i 37) 100 }}
-      {{ $left := mod (mul $i 53) 100 }}
+    {{ range $i := seq 0 179 }}
+      {{ $top := mod (add (mul $i 37) (mul $i $i)) 100 }}
+      {{ $left := mod (add (mul $i 53) (mul (mul $i $i) 3)) 100 }}
       {{ $size := add 3 (mod $i 5) }}
       <div class="sparkle" style="{{ printf "top: %d%%; left: %d%%; width: %dpx; height: %dpx;" $top $left $size $size | safeCSS }}"></div>
     {{ end }}
@@ -393,8 +394,8 @@
           var cy = rect.top + rect.height / 2;
           var dist = Math.hypot(x - cx, y - cy);
           var t = Math.max(0, 1 - dist / radius);
-          el.style.opacity = (0.3 + t * 0.7).toFixed(2);
-          el.style.boxShadow = '0 0 ' + (4 + t * 16) + 'px ' + (1 + t * 3) + 'px rgba(30, 64, 175, ' + (0.35 + t * 0.5) + ')';
+          el.style.opacity = (0.3 + t * 0.4).toFixed(2);
+          el.style.boxShadow = '0 0 ' + (4 + t * 9) + 'px ' + (1 + t * 1.5) + 'px rgba(51, 255, 51, ' + (0.35 + t * 0.25) + ')';
         });
         ticking = false;
       }
