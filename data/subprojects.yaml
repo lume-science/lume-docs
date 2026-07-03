@@ -5,6 +5,7 @@
 #   description: One or two sentence summary of what this package does.
 #   repo: https://github.com/org/repo
 #   docs: /docs/package-name/   # optional; omit or leave blank if none yet
+#   tags: [Related]             # optional; small pills shown bottom-right of the card
 
 - name: LUME Base
   description: Placeholder description of the core LUME package. Replace with the real summary.
@@ -46,3 +47,9 @@
   description: Placeholder description of the LUME visualization package. Replace with the real summary.
   repo: https://github.com/ChristopherMayes/openPMD-beamphysics
   docs: https://christophermayes.github.io/openPMD-beamphysics/
+  tags: [Related]
+- name: Distgen
+  description: Placeholder description of the LUME visualization package. Replace with the real summary.
+  repo: https://github.com/ColwynGulliford/distgen
+  docs: https://colwyngulliford.github.io/distgen/
+  tags: [Related]

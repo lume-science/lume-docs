@@ -244,6 +244,34 @@
       text-underline-offset: 3px;
     }
 
+    .card-footer {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      justify-content: flex-end;
+      margin-left: auto;
+    }
+
+    .tag {
+      font-size: 0.68rem;
+      font-weight: 600;
+      line-height: 1;
+      padding: 0.25rem 0.5rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
     a:focus-visible {
       outline: 2px solid var(--accent-2);
       outline-offset: 2px;
@@ -351,9 +379,16 @@
           <div class="card">
             <h2>{{ .name }}</h2>
             <p>{{ .description }}</p>
-            <div class="links">
-              {{ if .repo }}<a href="{{ .repo }}" target="_blank" rel="noopener">Repo &rarr;</a>{{ end }}
-              {{ if .docs }}<a href="{{ .docs }}" target="_blank" rel="noopener">Docs &rarr;</a>{{ end }}
+            <div class="card-footer">
+              <div class="links">
+                {{ if .repo }}<a href="{{ .repo }}" target="_blank" rel="noopener">Repo &rarr;</a>{{ end }}
+                {{ if .docs }}<a href="{{ .docs }}" target="_blank" rel="noopener">Docs &rarr;</a>{{ end }}
+              </div>
+              {{ with .tags }}
+                <div class="tags">
+                  {{ range . }}<span class="tag">{{ . }}</span>{{ end }}
+                </div>
+              {{ end }}
             </div>
           </div>
         {{ end }}
