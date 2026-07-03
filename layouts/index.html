@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ .Title }}</title>
   {{ with .Description }}<meta name="description" content="{{ . }}">{{ end }}
+  <meta property="og:title" content="{{ .Title }}">
+  {{ with .Description }}<meta property="og:description" content="{{ . }}">{{ end }}
+  <meta property="og:type" content="website">
   <style>
     :root {
       color-scheme: dark;
@@ -15,7 +18,7 @@
       --border: #232733;
       --accent-1: #1e40af;
       --accent-2: #6b84b3;
-      --accent-3: #cffafe;
+      --content-width: 1100px;
     }
 
     * { box-sizing: border-box; }
@@ -66,7 +69,7 @@
     }
 
     .navbar-inner {
-      max-width: 1100px;
+      max-width: var(--content-width);
       margin: 0 auto;
       padding: 1.25rem 1.5rem;
       display: flex;
@@ -87,6 +90,7 @@
       text-decoration: none;
       font-size: 0.9rem;
       font-weight: 600;
+      transition: color 0.15s ease;
     }
 
     .navbar-link:hover {
@@ -95,8 +99,16 @@
 
     .hero {
       max-width: 860px;
+      width: 100%;
       margin: 0 auto;
-      padding: 6rem 1.5rem 3rem;
+      padding: 3rem 1.5rem 0;
+    }
+
+    .hero-box {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: clamp(1.25rem, 3vw, 2rem) clamp(2rem, 5vw, 3.5rem) clamp(2rem, 5vw, 3.5rem);
       text-align: center;
     }
 
@@ -132,18 +144,46 @@
     }
 
     .hero p {
-      margin: 1.5rem auto 0;
+      margin: 0.75rem auto 0;
       max-width: 620px;
-      font-size: 1.15rem;
+      font-size: 0.95rem;
+      text-align: justify;
       color: var(--muted);
     }
 
     main {
       flex: 1 0 auto;
-      max-width: 1100px;
+      max-width: var(--content-width);
       width: 100%;
       margin: 0 auto;
-      padding: 1rem 1.5rem 6rem;
+      padding: 3.5rem 1.5rem 6rem;
+    }
+
+    .section-header {
+      margin: 0 0 2rem;
+    }
+
+    .section-header .eyebrow {
+      margin: 0 0 0.25rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-2);
+    }
+
+    .section-header h2 {
+      margin: 0;
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    .section-header .section-sub {
+      margin: 0.35rem 0 0;
+      font-size: 0.95rem;
+      color: var(--muted);
     }
 
     .cards {
@@ -166,7 +206,7 @@
     .card:hover, .card:focus-within {
       transform: translateY(-4px);
       border-color: var(--accent-1);
-      box-shadow: 0 12px 30px -12px rgba(124, 92, 255, 0.45);
+      box-shadow: 0 12px 30px -12px rgba(30, 64, 175, 0.45);
     }
 
     .card h2 {
@@ -200,6 +240,13 @@
 
     .card .links a:hover {
       text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    a:focus-visible {
+      outline: 2px solid var(--accent-2);
+      outline-offset: 2px;
+      border-radius: 2px;
     }
 
     footer {
@@ -209,7 +256,7 @@
     }
 
     .footer-inner {
-      max-width: 1100px;
+      max-width: var(--content-width);
       margin: 0 auto;
       padding: 2rem 1.5rem;
     }
@@ -275,31 +322,37 @@
   <nav class="navbar">
     <div class="navbar-inner">
       <a class="navbar-brand" href="{{ "/" | relURL }}">LUME</a>
-      <a class="navbar-link" href="{{ .Site.Params.githubOrg }}">GitHub</a>
+      <a class="navbar-link" href="{{ .Site.Params.githubOrg }}" target="_blank" rel="noopener">GitHub</a>
     </div>
   </nav>
 
   <header class="hero">
-    <h1 class="brand">
-      <span class="word"><span class="initial">L</span><span class="rest">ightsource</span></span>
-      <span class="word"><span class="initial">U</span><span class="rest">nified</span></span>
-      <span class="word"><span class="initial">M</span><span class="rest">odeling</span></span>
-      <span class="word"><span class="initial">E</span><span class="rest">nvironment</span></span>
-    </h1>
-    {{ with .Description }}<p>{{ . }}</p>{{ end }}
+    <div class="hero-box">
+      <h1 class="brand">
+        <span class="word"><span class="initial">L</span><span class="rest">ightsource</span></span>
+        <span class="word"><span class="initial">U</span><span class="rest">nified</span></span>
+        <span class="word"><span class="initial">M</span><span class="rest">odeling</span></span>
+        <span class="word"><span class="initial">E</span><span class="rest">nvironment</span></span>
+      </h1>
+      {{ with .Description }}<p>{{ . }}</p>{{ end }}
+    </div>
   </header>
 
   <main>
     {{ $subprojects := hugo.Data.subprojects }}
     {{ if $subprojects }}
+      <div class="section-header">
+        <h2>Ecosystem</h2>
+        <p class="section-sub">Codes and projects that are part of or related to the LUME ecosystem.</p>
+      </div>
       <div class="cards">
         {{ range $subprojects }}
           <div class="card">
             <h2>{{ .name }}</h2>
             <p>{{ .description }}</p>
             <div class="links">
-              {{ if .repo }}<a href="{{ .repo }}">Repo &rarr;</a>{{ end }}
-              {{ if .docs }}<a href="{{ .docs }}">Docs &rarr;</a>{{ end }}
+              {{ if .repo }}<a href="{{ .repo }}" target="_blank" rel="noopener">Repo &rarr;</a>{{ end }}
+              {{ if .docs }}<a href="{{ .docs }}" target="_blank" rel="noopener">Docs &rarr;</a>{{ end }}
             </div>
           </div>
         {{ end }}
@@ -320,7 +373,7 @@
       {{ end }}
       <div class="footer-bottom">
         <span>&copy; {{ now.Year }} LUME</span>
-        <a href="{{ .Site.Params.githubOrg }}">GitHub</a>
+        <a href="{{ .Site.Params.githubOrg }}" target="_blank" rel="noopener">GitHub</a>
       </div>
     </div>
   </footer>
