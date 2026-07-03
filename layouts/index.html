@@ -227,6 +227,12 @@
       flex-grow: 1;
     }
 
+    .card p a {
+      color: var(--accent-2);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
     .card .links {
       display: flex;
       gap: 1rem;
@@ -378,7 +384,7 @@
         {{ range $subprojects }}
           <div class="card">
             <h2>{{ .name }}</h2>
-            <p>{{ .description }}</p>
+            <p>{{ $.RenderString (dict "display" "inline") .description }}</p>
             <div class="card-footer">
               <div class="links">
                 {{ if .repo }}<a href="{{ .repo }}" target="_blank" rel="noopener">Repo &rarr;</a>{{ end }}

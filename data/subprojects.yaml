@@ -8,48 +8,48 @@
 #   tags: [Related]             # optional; small pills shown bottom-right of the card
 
 - name: LUME Base
-  description: Placeholder description of the core LUME package. Replace with the real summary.
+  description: Lightweight package defining common LUME, LUME Model interfaces. Used by all other LUME packages.
   repo: https://github.com/lume-science/lume-base
   docs: https://lume-science.github.io/lume-base/
-- name: LUME Impact
-  description: Placeholder description of the LUME visualization package. Replace with the real summary.
+- name: LUME IMPACT
+  description: For the IMPACT family of codes. Classes to control [IMPACT-T](https://github.com/impact-lbl/IMPACT-T) and [IMPACT-Z](https://github.com/impact-lbl/IMPACT-Z). LUME Model creation for IMPACT-T lattices.
   repo: https://github.com/ChristopherMayes/lume-impact
   docs: https://christophermayes.github.io/lume-impact/
 - name: LUME Genesis
-  description: Placeholder description of the LUME visualization package. Replace with the real summary.
+  description: For use with the Genesis 1.3 FEL simulation code.
   repo: https://github.com/slaclab/lume-genesis
   docs: https://slaclab.github.io/lume-genesis/
 - name: LUME ASTRA
-  description: Placeholder description of the LUME visualization package. Replace with the real summary.
+  description: For use with [A Space Charge Tracking Algorithm (ASTRA)](https://www.desy.de/~mpyflo/) from DESY.
   repo: https://github.com/ChristopherMayes/lume-astra
   docs: ""
 - name: LUME GPT
-  description: Placeholder description of the LUME visualization package. Replace with the real summary.
+  description: For use with the [General Particle Tracer (GPT)](https://www.pulsar.nl/gpt/) code for space charge simulations.
   repo: https://github.com/ColwynGulliford/lume-gpt
   docs: ""
 - name: LUME PVA
-  description: Placeholder description of the LUME command-line tool. Replace with the real summary.
+  description: Serve the variables in your LUME Model as EPICS PVs. Ie for virtual accelerator modeling.
   repo: https://github.com/lume-science/lume-pva
   docs: ""
 - name: LUME BMAD
-  description: Placeholder description of the LUME visualization package. Replace with the real summary.
+  description: Create LUME Models for your Bmad lattice using [pytao](https://github.com/bmad-sim/pytao)/
   repo: https://github.com/lume-science/lume-bmad
   docs: ""
 - name: LUME Cheetah
-  description: Placeholder description of the LUME visualization package. Replace with the real summary.
+  description: For use with the [Cheetah](https://github.com/desy-ml/cheetah) differentiable accelerator simulation tool.
   repo: https://github.com/lume-science/lume-cheetah
   docs: ""
 - name: LUME Torch
-  description: Placeholder description of the LUME visualization package. Replace with the real summary.
+  description: Serve pytorch surrogate models through the LUME Model interface.
   repo: https://github.com/lume-science/lume-torch
   docs: ""
 - name: OpenPMD Beamphysics
-  description: Placeholder description of the LUME visualization package. Replace with the real summary.
+  description: Python implementation of the OpenPMD Beamphysics extension data standard for charged particle beams. Used as a common data standard for beams within LUME.
   repo: https://github.com/ChristopherMayes/openPMD-beamphysics
   docs: https://christophermayes.github.io/openPMD-beamphysics/
   tags: [Related]
 - name: Distgen
-  description: Placeholder description of the LUME visualization package. Replace with the real summary.
+  description: Generate OpenPMD Beamphysics charged particle beams from a wide variety of distributions. Used within LUME packages for beam creation.
   repo: https://github.com/ColwynGulliford/distgen
   docs: https://colwyngulliford.github.io/distgen/
   tags: [Related]
