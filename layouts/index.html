@@ -18,7 +18,7 @@
       --border: #232733;
       --accent-1: #1e40af;
       --accent-2: #6b84b3;
-      --hero: #f2f5d5;
+      --hero: #fefefe;
       --content-width: 1100px;
     }
 
@@ -83,6 +83,11 @@
       font-weight: 700;
       font-size: 1.1rem;
       letter-spacing: -0.02em;
+    }
+
+    .navbar-links {
+      display: flex;
+      gap: 1.25rem;
     }
 
     .navbar-link {
@@ -365,7 +370,10 @@
   <nav class="navbar">
     <div class="navbar-inner">
       <a class="navbar-brand" href="{{ "/" | relURL }}">LUME</a>
-      <a class="navbar-link" href="{{ .Site.Params.githubOrg }}" target="_blank" rel="noopener">GitHub</a>
+      <div class="navbar-links">
+        <a class="navbar-link" href="{{ "/architecture/" | relURL }}">Architecture</a>
+        <a class="navbar-link" href="{{ .Site.Params.githubOrg }}" target="_blank" rel="noopener">GitHub</a>
+      </div>
     </div>
   </nav>
 

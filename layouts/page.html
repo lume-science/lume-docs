@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="{{ .Site.Language.Lang | default "en" }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ .Title }} | {{ .Site.Title }}</title>
+  {{ with .Description }}<meta name="description" content="{{ . }}">{{ end }}
+  <meta property="og:title" content="{{ .Title }}">
+  {{ with .Description }}<meta property="og:description" content="{{ . }}">{{ end }}
+  <meta property="og:type" content="article">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b0d12;
+      --bg-alt: #12151d;
+      --text: #e7e9ee;
+      --muted: #9aa2b1;
+      --border: #232733;
+      --accent-1: #1e40af;
+      --accent-2: #6b84b3;
+      --hero: #fefefe;
+      --content-width: 1100px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.5;
+    }
+
+    .navbar {
+      background: var(--bg-alt);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .navbar-inner {
+      max-width: var(--content-width);
+      margin: 0 auto;
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .navbar-brand {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .navbar-links {
+      display: flex;
+      gap: 1.25rem;
+    }
+
+    .navbar-link {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: color 0.15s ease;
+    }
+
+    .navbar-link:hover {
+      color: var(--accent-2);
+    }
+
+    main {
+      flex: 1 0 auto;
+      max-width: 800px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 6rem;
+    }
+
+    .page-title {
+      margin: 0 0 1.5rem;
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--hero);
+    }
+
+    .content h2 {
+      margin: 2.5rem 0 0.75rem;
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--accent-2);
+    }
+
+    .content h3 {
+      margin: 2rem 0 0.5rem;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--accent-2);
+    }
+
+    .content p, .content li {
+      color: var(--text);
+      font-size: 0.98rem;
+    }
+
+    .content a {
+      color: var(--accent-2);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .content code {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 0.1em 0.35em;
+      font-size: 0.9em;
+    }
+
+    .content pre.mermaid {
+      display: flex;
+      justify-content: center;
+      margin: 2rem 0;
+      padding: 1.5rem 1rem;
+      width: min(calc(100vw - 3rem), var(--content-width));
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow-x: auto;
+    }
+
+    a:focus-visible {
+      outline: 2px solid var(--accent-2);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+
+    footer {
+      flex-shrink: 0;
+      border-top: 1px solid var(--border);
+      background: var(--bg-alt);
+    }
+
+    .footer-inner {
+      max-width: var(--content-width);
+      margin: 0 auto;
+      padding: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .footer-inner a {
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .footer-inner a:hover {
+      color: var(--accent-2);
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a class="navbar-brand" href="{{ "/" | relURL }}">LUME</a>
+      <div class="navbar-links">
+        <a class="navbar-link" href="{{ "/architecture/" | relURL }}">Architecture</a>
+        <a class="navbar-link" href="{{ .Site.Params.githubOrg }}" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <h1 class="page-title">{{ .Title }}</h1>
+    <div class="content">
+      {{ .Content }}
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <span>&copy; {{ now.Year }} LUME</span>
+      <a href="{{ .Site.Params.githubOrg }}" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </footer>
+
+  {{ if .Store.Get "hasMermaid" }}
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "base",
+      themeVariables: {
+        background: "#0b0d12",
+        primaryColor: "#12151d",
+        primaryTextColor: "#e7e9ee",
+        primaryBorderColor: "#6b84b3",
+        lineColor: "#6b84b3",
+        secondaryColor: "#12151d",
+        tertiaryColor: "#0b0d12",
+        clusterBkg: "transparent",
+        clusterBorder: "#232733",
+        titleColor: "#9aa2b1",
+        edgeLabelBackground: "#0b0d12",
+        fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
+      }
+    });
+  </script>
+  {{ end }}
+</body>
+</html>
