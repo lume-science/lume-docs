@@ -5,66 +5,73 @@ description: >
   classes down to facility-specific staged models.
 ---
 
-LUME is organized in three tiers. A simulator-agnostic base package defines
-the common model interface, simulator-specific packages adapt individual
-codes to that interface, and facility-specific packages compose those models
-into staged pipelines for real machines.
+LUME is organized in three tiers.
+A simulator-agnostic base package defines the common base and model interface which is consumed by other parts of the ecosystem such as LUME-PVA for EPICS PV serving.
+Simulator-specific packages wrap individual codes in a convenient python layer and adapts them to the LUME interface.
+Facility-specific packages are developed by users and can integrate multiple codes into staged pipelines that represent real machines.
+
+## Interface Level
+
+```mermaid
+flowchart BT
+  base["<b>LUME-Base</b><br/><span style='font-size:0.75em'>LUMEModel &middot; StagedModel<br/>Variables / Actions</span>"]
+  pva["<b>LUME-pva</b><br/><span style='font-size:0.75em'>EPICS PV serving</span>"]
+  pva -->|uses| base
+
+  classDef pkg fill:#12151d,stroke:#6b84b3,color:#e7e9ee;
+  class base,pva pkg;
+```
+
+[LUME-Base](https://github.com/lume-science/lume-base) defines the core abstractions shared by every package.
+It contains the standard dict-like method of interacting with simulation tools.
+The `LUMEModel` interface provides a standard way to expose what users may interact with and how to interact with them in physics simulations with state (through `Variable` objects).
+These can be chained using a `StagedModel`
+LUME-pva builds on the `LUMEModel` interface to serve model variables as EPICS PVs.
+
+## Simulation Codes Level
 
 ```mermaid
 flowchart TB
-  subgraph tier1["Simulator Agnostic"]
-    direction LR
-    base["<b>LUME-Base</b><br/>LUMEModel<br/>StagedModel(LUMEModel)<br/>Variables / Actions"]
-    pva["<b>LUME-pva</b><br/>EPICS PV serving"]
-    base --> pva
-  end
-
-  subgraph tier2["Facility Agnostic"]
-    impact["<b>LUME-Impact</b>"]
-    bmad["<b>LUME-Bmad</b>"]
-    cheetah["<b>LUME-Cheetah</b>"]
-    torch["<b>LUME-Torch</b>"]
-    genesis["<b>LUME-Genesis</b>"]
-  end
-
-  subgraph tier3["Facility Specific"]
-    direction LR
-    userinjector["UserInjector"] --> userlinac["UserLinac"] --> userfel["UserFEL"]
-  end
-
-  base --> impact
-  base --> bmad
-  base --> cheetah
-  base --> torch
-  base --> genesis
-
-  impact --> userinjector
-  bmad --> userlinac
-  genesis --> userfel
+  base["<b>LUME-Base</b>"]
+  base --> impact["<b>LUME-Impact</b>"]
+  base --> bmad["<b>LUME-Bmad</b>"]
+  base --> cheetah["<b>LUME-Cheetah</b>"]
+  base --> torch["<b>LUME-Torch</b>"]
+  base --> genesis["<b>LUME-Genesis</b>"]
 
   classDef pkg fill:#12151d,stroke:#6b84b3,color:#e7e9ee;
-  classDef dev fill:#12151d,stroke:#6b84b3,stroke-dasharray:6 4,color:#e7e9ee;
-  classDef stage fill:#1e40af,stroke:#6b84b3,color:#e7e9ee;
-  class base,pva,impact,bmad,cheetah,torch pkg;
-  class genesis dev;
-  class userinjector,userlinac,userfel stage;
-
-  linkStyle 1,2,8,9,10 stroke:#4ade80,stroke-width:2px;
+  class base,impact,bmad,cheetah,torch,genesis pkg;
 ```
 
-## The tiers
+Each physics simulation tool gets a python wrapper package (LUME-Impact, LUME-Bmad, LUME-Cheetah, LUME-Torch, and the in-development LUME-Genesis).
+These packages define a python interface for interacting with the codes and also include "batteries-included" `LUMEModel` objects specialized to each code.
+These help by automatically generating variables from pre-loaded simulations of user lattices which can then be extended with custom actions as required.
 
-**Simulator agnostic.** [LUME-Base](https://github.com/lume-science/lume-base)
-defines the core abstractions shared by every package: `LUMEModel`, the
-`StagedModel` composition of models, and the variable/action interface.
-LUME-pva builds on it to serve model variables as EPICS PVs.
+## User Implementation Level
 
-**Facility agnostic.** Each simulation code gets a thin adapter package
-(LUME-Impact, LUME-Bmad, LUME-Cheetah, LUME-Torch, and the in-development
-LUME-Genesis) whose model class subclasses `LumeModel`. These packages know
-about their simulator but nothing about any particular machine.
+```mermaid
+flowchart LR
+  subgraph s1["Injector stage"]
+    direction TB
+    impact["<b>LUME-Impact</b>"] --> userinjector["UserInjector"]
+  end
+  subgraph s2["Linac stage"]
+    direction TB
+    bmad["<b>LUME-Bmad</b>"] --> userlinac["UserLinac"]
+  end
+  subgraph s3["FEL stage"]
+    direction TB
+    genesis["<b>LUME-Genesis</b>"] --> userfel["UserFEL"]
+  end
+  s1 --> s2 --> s3
 
-**Facility specific.** Real machines are modeled by composing the adapters
-into a `StagedModel`. For example, a facility might chain a `UserInjector`
-stage (Impact), a `UserLinac` stage (Bmad), and a `UserFEL` stage (Genesis)
-into a `UserFacilityModel` that simulates the machine end to end.
+  classDef pkg fill:#12151d,stroke:#6b84b3,color:#e7e9ee;
+  classDef stage fill:#1e40af,stroke:#6b84b3,color:#e7e9ee;
+  class impact,bmad,genesis pkg;
+  class userinjector,userlinac,userfel stage;
+```
+
+
+Real machines are modeled by composing the simulator-specific wrapper classes into a `StagedModel`.
+Each stage subclasses objects from the LUME package shown above it, and the stages are chained left to right: a `UserInjector` stage (Impact) feeds a `UserLinac` stage (Bmad), which feeds a `UserFEL` stage (Genesis), forming a `UserFacilityModel` that simulates the machine end to end.
+Through the `LUMEModel` interface, this chained simulation can be connected to packages like `lume-pva` eg for controlling the model through EPICS PVs.
