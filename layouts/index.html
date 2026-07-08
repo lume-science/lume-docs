@@ -359,11 +359,12 @@
 </head>
 <body>
   <div class="backdrop">
-    {{ range $i := seq 0 179 }}
-      {{ $top := mod (add (mul $i 37) (mul $i $i)) 100 }}
-      {{ $left := mod (add (mul $i 53) (mul (mul $i $i) 3)) 100 }}
-      {{ $size := add 3 (mod $i 5) }}
-      <div class="sparkle" style="{{ printf "top: %d%%; left: %d%%; width: %dpx; height: %dpx;" $top $left $size $size | safeCSS }}"></div>
+    {{ range $i := seq 0 359 }}
+      {{ $epoch := div $i 100 }}
+      {{ $top := mod (add (add (mul $i 37) (mul $i $i)) (mul $epoch 47)) 100 }}
+      {{ $left := mod (add (add (mul $i 53) (mul (mul $i $i) 3)) (mul $epoch 71)) 100 }}
+      {{ $size := div (add 3 (mod $i 5)) 2.0 }}
+      <div class="sparkle" style="{{ printf "top: %d%%; left: %d%%; width: %.1fpx; height: %.1fpx;" $top $left $size $size | safeCSS }}"></div>
     {{ end }}
   </div>
 

@@ -30,6 +30,7 @@
     }
 
     body {
+      position: relative;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
@@ -37,6 +38,29 @@
       color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       line-height: 1.5;
+    }
+
+    .backdrop {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+      background: var(--bg);
+    }
+
+    .sparkle {
+      position: absolute;
+      border-radius: 50%;
+      background: #33ff33;
+      opacity: 0.3;
+      box-shadow: 0 0 4px 1px rgba(51, 255, 51, 0.35);
+      pointer-events: none;
+      will-change: opacity, box-shadow;
+      transition: opacity 0.15s ease-out, box-shadow 0.15s ease-out;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .sparkle { transition: none; }
     }
 
     .navbar {
@@ -179,6 +203,16 @@
   </style>
 </head>
 <body>
+  <div class="backdrop">
+    {{ range $i := seq 0 359 }}
+      {{ $epoch := div $i 100 }}
+      {{ $top := mod (add (add (mul $i 37) (mul $i $i)) (mul $epoch 47)) 100 }}
+      {{ $left := mod (add (add (mul $i 53) (mul (mul $i $i) 3)) (mul $epoch 71)) 100 }}
+      {{ $size := div (add 3 (mod $i 5)) 2.0 }}
+      <div class="sparkle" style="{{ printf "top: %d%%; left: %d%%; width: %.1fpx; height: %.1fpx;" $top $left $size $size | safeCSS }}"></div>
+    {{ end }}
+  </div>
+
   <nav class="navbar">
     <div class="navbar-inner">
       <a class="navbar-brand" href="{{ "/" | relURL }}">LUME</a>
@@ -227,5 +261,37 @@
     });
   </script>
   {{ end }}
+
+  <script>
+    (function () {
+      var sparkles = Array.prototype.slice.call(document.querySelectorAll('.sparkle'));
+      if (!sparkles.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      var ticking = false;
+      var radius = 280;
+
+      function apply(x, y) {
+        sparkles.forEach(function (el) {
+          var rect = el.getBoundingClientRect();
+          var cx = rect.left + rect.width / 2;
+          var cy = rect.top + rect.height / 2;
+          var dist = Math.hypot(x - cx, y - cy);
+          var t = Math.max(0, 1 - dist / radius);
+          el.style.opacity = (0.3 + t * 0.4).toFixed(2);
+          el.style.boxShadow = '0 0 ' + (4 + t * 9) + 'px ' + (1 + t * 1.5) + 'px rgba(51, 255, 51, ' + (0.35 + t * 0.25) + ')';
+        });
+        ticking = false;
+      }
+
+      window.addEventListener('mousemove', function (e) {
+        var x = e.clientX;
+        var y = e.clientY;
+        if (!ticking) {
+          window.requestAnimationFrame(function () { apply(x, y); });
+          ticking = true;
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
