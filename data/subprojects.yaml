@@ -13,12 +13,12 @@
   docs: https://lume-science.github.io/lume-base/
 - name: LUME IMPACT
   description: For the IMPACT family of codes. Classes to control [IMPACT-T](https://github.com/impact-lbl/IMPACT-T) and [IMPACT-Z](https://github.com/impact-lbl/IMPACT-Z). LUME Model creation for IMPACT-T lattices.
-  repo: https://github.com/ChristopherMayes/lume-impact
-  docs: https://christophermayes.github.io/lume-impact/
+  repo: https://github.com/lume-science/lume-impact
+  docs: https://lume-science.github.io/lume-impact/
 - name: LUME Genesis
   description: For use with the Genesis 1.3 FEL simulation code.
-  repo: https://github.com/slaclab/lume-genesis
-  docs: https://slaclab.github.io/lume-genesis/
+  repo: https://github.com/lume-science/lume-genesis
+  docs: https://lume-science.github.io/lume-genesis/
 - name: LUME ASTRA
   description: For use with [A Space Charge Tracking Algorithm (ASTRA)](https://www.desy.de/~mpyflo/) from DESY.
   repo: https://github.com/ChristopherMayes/lume-astra
@@ -52,4 +52,9 @@
   description: Generate OpenPMD Beamphysics charged particle beams from a wide variety of distributions. Used within LUME packages for beam creation.
   repo: https://github.com/ColwynGulliford/distgen
   docs: https://colwyngulliford.github.io/distgen/
+  tags: [Related]
+- name: Xopt
+  description: Single and multi-objective optimization toolkit. Highly compatible with LUME ecosystem tools for accelerator optimization.
+  repo: https://github.com/xopt-org/Xopt
+  docs: https://xopt.xopt.org/
   tags: [Related]
