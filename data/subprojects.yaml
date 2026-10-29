@@ -39,6 +39,14 @@
   description: For use with the [Cheetah](https://github.com/desy-ml/cheetah) differentiable accelerator simulation tool.
   repo: https://github.com/lume-science/lume-cheetah
   docs: ""
+- name: LUME RF-Track
+  description: Run and interact with simulations from the particle tracking code [RF-Track](https://gitlab.cern.ch/rf-track).
+  repo: https://github.com/lume-science/lume-rftrack
+  docs: ""
+- name: LUME pyAT
+  description: Serve [Accelerator Toolbox (AT)](https://github.com/atcollab/at) lattices as LUME models.
+  repo: https://github.com/lume-science/lume-pyat
+  docs: ""
 - name: LUME Torch
   description: Serve pytorch surrogate models through the LUME Model interface.
   repo: https://github.com/lume-science/lume-torch

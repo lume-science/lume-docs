@@ -3,6 +3,8 @@
 # - date: 2026-06-01
 #   text: Short news blurb.
 
+- date: "2026-10-29"
+  text: "Two new additions to the LUME ecosystem! Check out [LUME RF-Track](https://github.com/lume-science/lume-rftrack) and [LUME pyAT](https://github.com/lume-science/lume-pyat)."
 - date: "2026-07-02"
   text: "[LUME-Base v0.5.0](https://github.com/lume-science/lume-base/releases/tag/v0.5.0) released with \"actions framework\" for development of modular LUME Models."
 - date: "2026-05-20"
